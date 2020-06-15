@@ -124,18 +124,17 @@ class BNetPlugin(Plugin):
         try:
             self.local_client.refresh()
             log.info(f'Installing game of id {game_id}')
-            self.local_client.install_game(game_id, \
-                        region=self.authentication_client.auth_data.region)
+            self.local_client.install_game(game_id)
         except ClientNotInstalledError as e:
             log.warning(e)
             await self.open_battlenet_browser()
         except Exception as e:
             log.exception(f"Installing game {game_id} failed: {e}")
 
-    def _open_battlenet_at_id(self, game_id, region='eu'):
+    def _open_battlenet_at_id(self, game_id):
         try:
             self.local_client.refresh()
-            self.local_client.open_battlenet(game_id, region=region)
+            self.local_client.open_battlenet(game_id)
         except Exception as e:
             log.exception(f"Opening battlenet client on specific game_id {game_id} failed {e}")
             try:
@@ -150,12 +149,10 @@ class BNetPlugin(Plugin):
         if game_id == 'wow_classic':
             # attempting to uninstall classic wow through protocol gives you a message that the game cannot
             # be uninstalled through protocol and you should use battle.net
-            return self._open_battlenet_at_id(game_id, \
-                        region=self.authentication_client.auth_data.region)
+            return self._open_battlenet_at_id(game_id)
 
         if SYSTEM == pf.MACOS:
-            self._open_battlenet_at_id(game_id, \
-                        region=self.authentication_client.auth_data.region)
+            self._open_battlenet_at_id(game_id)
         else:
             try:
                 installed_game = self.local_client.get_installed_games().get(game_id, None)

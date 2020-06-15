@@ -137,14 +137,5 @@ class _Blizzard(object, metaclass=Singleton):
             if info.try_for_free
         ]
 
-    def blizzard_id_to_uid(self, blizzard_id, region='eu'):
-        if region == 'cn' and blizzard_id == '17459':
-            return 'd3cn'
-        else:
-            for game in self._GAMES:
-                if game.id == blizzard_id:
-                    return game.uid
-
-            raise ValueError('can not found that blizzard_id')
 
 Blizzard = _Blizzard()
